@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | InfoCell High Tech</title>
+    <style>
+        :root {
+            --primary: #1b5e20; --accent: #2ecc71; --bg: #f8f9fa; --text: #1a1a1a; --white: #ffffff;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; }
+        
+        header {
+            background: var(--white); border-bottom: 3px solid var(--primary);
+            padding: 1rem 8%; display: flex; justify-content: space-between;
+            align-items: center; position: sticky; top: 0; z-index: 1000;
+        }
+        
+        .logo { font-weight: 800; color: var(--primary); text-decoration: none; font-size: 1.2rem; }
+
+        .carrinho-btn {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 50px; cursor: pointer;
+        }
+
+        .container { max-width: 900px; margin: 40px auto; padding: 20px; }
+
+        .card {
+            background: var(--white); border-radius: 15px; padding: 25px;
+            display: grid; grid-template-columns: 150px 1fr 200px;
+            align-items: center; gap: 30px; margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .card img { width: 100%; border-radius: 8px; }
+        .preco { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 10px; }
+        
+        .btn-comprar {
+            background: var(--accent); color: white; border: none;
+            padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold;
+        }
+
+        /* Sidebar Carrinho */
+        #modal-carrinho {
+            display: none; position: fixed; right: 0; top: 0; width: 320px;
+            height: 100%; background: white; box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            padding: 25px; z-index: 2000;
+        }
+        .item-carrinho { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">← INFOCELL HIGH TECH</a>
+    <button class="carrinho-btn" onclick="toggleCarrinho()">🛒 Itens (<span id="cart-count">0</span>)</button>
+</header>
+
+<div class="container">
+    <h2>Nossos produtos</h2>
+    
+    <div class="card">
+        <img src="https://via.placeholder.com/150/1b5e20/FFFFFF?text=iPhone+15" alt="Produto">
+        <div>
+            <h3>iPhone 15 Pro Max</h3>
+            <p>A maior revolução em desempenho e câmera da Apple.</p>
+        </div>
+        <div style="text-align: right;">
+            <span class="preco">R$ 8.499</span>
+            <button class="btn-comprar" onclick="addCarrinho('iPhone 15 Pro', 8499)">ADICIONAR</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://via.placeholder.com/150/1b5e20/FFFFFF?text=MacBook" alt="Produto">
+        <div>
+            <h3>MacBook Air M2</h3>
+            <p>Potência para o dia todo em um design ultrafino.</p>
+        </div>
+        <div style="text-align: right;">
+            <span class="preco">R$ 7.200</span>
+            <button class="btn-comprar" onclick="addCarrinho('MacBook Air M2', 7200)">ADICIONAR</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal-carrinho">
+    <div style="display: flex; justify-content: space-between;">
+        <h3>Carrinho</h3>
+        <button onclick="toggleCarrinho()" style="border:none; background:none; font-size: 1.5rem; cursor:pointer;">&times;</button>
+    </div>
+    <div id="itens-carrinho"></div>
+    <h4>Total: R$ <span id="total-carrinho">0,00</span></h4>
+    <button class="btn-comprar" style="background: var(--primary);" onclick="alert('Indo para o pagamento...')">Finalizar Compra</button>
+</div>
+
+<script>
+    let carrinho = [];
+    let total = 0;
+
+    function addCarrinho(nome, preco) {
+        carrinho.push({nome, preco});
+        total += preco;
+        atualizarUI();
+    }
+
+    function atualizarUI() {
+        document.getElementById('cart-count').innerText = carrinho.length;
+        document.getElementById('total-carrinho').innerText = total.toLocaleString('pt-BR');
+        const lista = document.getElementById('itens-carrinho');
+        lista.innerHTML = "";
+        carrinho.forEach((item, i) => {
+            lista.innerHTML += `<div class="item-carrinho"><span>${item.nome}</span> <button onclick="remover(${i})" style="color:red; border:none; background:none; cursor:pointer;">X</button></div>`;
+        });
+    }
+
+    function remover(i) {
+        total -= carrinho[i].preco;
+        carrinho.splice(i, 1);
+        atualizarUI();
+    }
+
+    function toggleCarrinho() {
+        const m = document.getElementById('modal-carrinho');
+        m.style.display = m.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+</body>
+</html>
