@@ -8,7 +8,7 @@
         :root {
             --primary: #1b5e20; --accent: #2ecc71; --bg: #f8f9fa; --text: #1a1a1a; --white: #ffffff;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
         
         header {
             background: var(--white); border-bottom: 3px solid var(--primary);
@@ -20,31 +20,45 @@
 
         .carrinho-btn {
             background: var(--primary); color: white; border: none;
-            padding: 10px 20px; border-radius: 50px; cursor: pointer;
+            padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold;
         }
 
         .container { max-width: 900px; margin: 40px auto; padding: 20px; }
 
         .card {
             background: var(--white); border-radius: 15px; padding: 25px;
-            display: grid; grid-template-columns: 150px 1fr 200px;
+            display: grid; grid-template-columns: 150px 1fr 220px;
             align-items: center; gap: 30px; margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .card img { width: 100%; border-radius: 8px; }
-        .preco { font-size: 1.5rem; font-weight: 800; color: var(--primary); display: block; margin-bottom: 10px; }
+        .card img { width: 100%; border-radius: 8px; max-height: 150px; object-fit: contain; }
+        
+        /* Estilo dos Preços */
+        .preco-box { text-align: right; }
+        .preco-unidade { font-size: 0.9rem; color: #666; text-decoration: line-through; display: block; }
+        .preco-atacado { 
+            font-size: 1.6rem; font-weight: 800; color: var(--primary); 
+            display: block; margin-bottom: 5px; 
+        }
+        .badge-atacado { 
+            background: #e8f5e9; color: var(--primary); 
+            padding: 2px 8px; border-radius: 4px; 
+            font-size: 0.7rem; font-weight: bold; text-transform: uppercase;
+        }
         
         .btn-comprar {
             background: var(--accent); color: white; border: none;
-            padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold;
+            padding: 12px; border-radius: 8px; cursor: pointer; 
+            width: 100%; font-weight: bold; margin-top: 10px;
+            transition: 0.2s;
         }
+        .btn-comprar:hover { background: var(--primary); }
 
-        /* Sidebar Carrinho */
         #modal-carrinho {
             display: none; position: fixed; right: 0; top: 0; width: 320px;
             height: 100%; background: white; box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-            padding: 25px; z-index: 2000;
+            padding: 25px; z-index: 2000; overflow-y: auto;
         }
         .item-carrinho { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
     </style>
@@ -57,41 +71,416 @@
 </header>
 
 <div class="container">
-    <h2>Nossos produtos</h2>
+    <h2 style="color: var(--primary); border-left: 5px solid var(--accent); padding-left: 15px;">Catálogo Geral</h2>
     
     <div class="card">
-        <img src="https://via.placeholder.com/150/1b5e20/FFFFFF?text=iPhone+15" alt="Produto">
+        <img src="A02.png" alt="Dock de carga SAM A02">
         <div>
-            <h3>iPhone 15 Pro Max</h3>
-            <p>A maior revolução em desempenho e câmera da Apple.</p>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A02</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A02. Alta durabilidade.</p>
         </div>
-        <div style="text-align: right;">
-            <span class="preco">R$ 8.499</span>
-            <button class="btn-comprar" onclick="addCarrinho('iPhone 15 Pro', 8499)">ADICIONAR</button>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 3,99</span>
+            <span class="preco-atacado"> R$ 39,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock SAM A02', 3.99)">ADICIONAR</button>
         </div>
     </div>
 
     <div class="card">
-        <img src="https://via.placeholder.com/150/1b5e20/FFFFFF?text=MacBook" alt="Produto">
+        <img src="A03S.png" alt="MacBook">
         <div>
-            <h3>MacBook Air M2</h3>
-            <p>Potência para o dia todo em um design ultrafino.</p>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A03S</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A03S. Alta durabilidade</p>
         </div>
-        <div style="text-align: right;">
-            <span class="preco">R$ 7.200</span>
-            <button class="btn-comprar" onclick="addCarrinho('MacBook Air M2', 7200)">ADICIONAR</button>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 3,39</span>
+            <span class="preco-atacado">R$ 33,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock SAM A03S', 33,90)">ADICIONAR</button>
         </div>
     </div>
+    <div class="card">
+        <img src="A04E.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A04E</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A04E. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,35</span>
+            <span class="preco-atacado">R$ 43,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('A04E', 43,50)">ADICIONAR</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="A06.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A06 4G</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A06 4G. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,99</span>
+            <span class="preco-atacado">R$ 49,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('A06 4G', 49,90)">ADICIONAR</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="A07.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A07</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A07. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 5,99</span>
+            <span class="preco-atacado">R$ 49,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('A07', 49,90)">ADICIONAR</button>
+        </div>
+    </div>
+     <div class="card">
+        <img src="A10.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A10S M16</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A10S M16. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 3,25</span>
+            <span class="preco-atacado">R$ 32,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('A10S M16', 32,50)">ADICIONAR</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="A14.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A14 4G</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A14 4G. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,09</span>
+            <span class="preco-atacado">R$ 40,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A14 4G', 32,50)">ADICIONAR</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="A22.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A22 4G</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A22 4G. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,39</span>
+            <span class="preco-atacado">R$ 43,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A22 4G', 32,50)">ADICIONAR</button>
+        </div>
+    </div>
+         <div class="card">
+        <img src="A24.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A24 4G</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A24 4G. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,25</span>
+            <span class="preco-atacado">R$ 42,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A24 4G', 42,50)">ADICIONAR</button>
+        </div>
+        
+</div>
+<div class="card">
+        <img src="A26.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A26</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A26. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,25</span>
+            <span class="preco-atacado">R$ 42,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A24 4G', 42,50)">ADICIONAR</button>
+        </div>
+</div>
+<div class="card">
+        <img src="A31.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A31</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A31. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,49</span>
+            <span class="preco-atacado">R$ 44,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A31', 44,90)">ADICIONAR</button>
+        </div>
+</div>
+<div class="card">
+        <img src="A551.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM A55</h3>
+            <p>Placa dock de carga TURBO celular SAMSUNG modelo A55. Alta durabilidade</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 7,10</span>
+            <span class="preco-atacado">R$ 71,00</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM A55', 71,90)">ADICIONAR</button>
+        </div>
+
+        </div>
+<div class="card">
+        <img src="E71.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto E7 Power</h3>
+            <p>Moto E7 Celular Turbo Placa De Carga Conector Dock De Carga P</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 3,99</span>
+            <span class="preco-atacado">R$ 39,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto E7 Power', 39,90)">ADICIONAR</button>
+        </div>
+</div>
+<div class="card">
+        <img src="G8.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G8 Play M </h3>
+            <p>Dock Placa + Carga Rápida Para Moto G8 Play Xt2015 + Battria</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,89</span>
+            <span class="preco-atacado">R$ 48,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G8 Play M', 48,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G9.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G9 Plus </h3>
+            <p>Dock Carga Original Moto G9 Plus / Xt2087-1</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,39</span>
+            <span class="preco-atacado">R$ 43,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G9 Plus', 43,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="g21.jpg" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM G10/G20 </h3>
+            <p>Dock Conector de Carga para Moto G20 / G10 XT2128 – Compatível</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 3,99</span>
+            <span class="preco-atacado">R$ 39,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G10/G20', 39,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G22.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G22 </h3>
+            <p>Placa Dock Carga Para Motorola G22 Xt2231</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 7,99</span>
+            <span class="preco-atacado">R$ 79,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G22', 79,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G31.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G31 </h3>
+            <p>Placa Dock Carga Moto G31 XT2173-1 -2 -3</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,35</span>
+            <span class="preco-atacado">R$ 47,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G31', 47,50)">ADICIONAR</button>
+        </div>
+         </div>
+<div class="card">
+        <img src="G35.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G35 </h3>
+            <p>Placa Dock Carga Motorola Moto G35 XT2433-5</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 5,99</span>
+            <span class="preco-atacado">R$ 59,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G35', 59,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G41.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G41 </h3>
+            <p>Placa Dock de carga M G41 – XT2167-1 ORIG VR</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,99</span>
+            <span class="preco-atacado">R$ 49,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G41', 49,90)">ADICIONAR</button>
+        </div>
+         </div>
+<div class="card">
+        <img src="G42.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G42 </h3>
+            <p>Placa Dock Motorola Moto G42 Xt2233-1 OrigR</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 5,39</span>
+            <span class="preco-atacado">R$ 53,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G42', 53,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G52.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G52 </h3>
+            <p>Placa Dock Motorola Moto G52</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 5,89</span>
+            <span class="preco-atacado">R$ 58,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G52', 58,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="G84.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga SAM Moto G84 </h3>
+            <p>Placa Dock Motorola Moto G84</p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 6,39</span>
+            <span class="preco-atacado">R$ 63,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga SAM Moto G84', 63,90)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="one.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga One Fusion </h3>
+            <p>Dock Conector De Carga Moto One Fusion Xt2073 </p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,75</span>
+            <span class="preco-atacado">R$ 47,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga One Fusion', 47,50)">ADICIONAR</button>
+        </div>
+</div>
+<div class="card">
+        <img src="macro.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de carga Moto Macro </h3>
+            <p>Dock Conector De Carga Moto one Macro xt2016  </p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,39</span>
+            <span class="preco-atacado">R$ 43,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de carga Moto Macro', 43,90)">ADICIONAR</button>
+        </div>
+</div>
+<div class="card">
+        <img src="poco.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de cargar Redmi 13C/ Poco C65 TURBO </h3>
+            <p>Dock Conector De Carga Redmi 13C/ Poco C65 TURBO  </p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 4,99</span>
+            <span class="preco-atacado">R$ 49,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Redmi 13C/ Poco C65 TURBO', 49,90)">ADICIONAR</button>
+        </div>
+
+        </div>
+<div class="card">
+        <img src="redmi.png" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de cargar Redmi 14C/ Poco C75 </h3>
+            <p>Dock Conector De Carga Xiaomi Redmi 14C, Poco C75  </p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 5,15</span>
+            <span class="preco-atacado">R$ 51,50</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de cargar Redmi 14C/ Poco C75', 51,50)">ADICIONAR</button>
+        </div>
+        </div>
+<div class="card">
+        <img src="X15.jpg" alt="MacBook">
+        <div>
+            <span class="badge-atacado">Revenda</span>
+            <h3>Dock de cargar Redmi 15C </h3>
+            <p>Dock Conector De Carga Xiaomi Redmi 15C  </p>
+        </div>
+        <div class="preco-box">
+            <span class="preco-unidade">Unidade: R$ 8,29</span>
+            <span class="preco-atacado">R$ 82,90</span>
+            <small>Preço no Atacado</small>
+            <button class="btn-comprar" onclick="addCarrinho('Dock de cargar Redmi 15C', 82,90)">ADICIONAR</button>
+        </div>
+        </div>
+
 </div>
 
 <div id="modal-carrinho">
-    <div style="display: flex; justify-content: space-between;">
-        <h3>Carrinho</h3>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Meu Carrinho</h3>
         <button onclick="toggleCarrinho()" style="border:none; background:none; font-size: 1.5rem; cursor:pointer;">&times;</button>
     </div>
+    <hr>
     <div id="itens-carrinho"></div>
     <h4>Total: R$ <span id="total-carrinho">0,00</span></h4>
-    <button class="btn-comprar" style="background: var(--primary);" onclick="alert('Indo para o pagamento...')">Finalizar Compra</button>
+    <button class="btn-comprar" style="background: var(--primary);" onclick="alert('Finalizando pedido...')">Finalizar Compra</button>
 </div>
 
 <script>
@@ -106,11 +495,18 @@
 
     function atualizarUI() {
         document.getElementById('cart-count').innerText = carrinho.length;
-        document.getElementById('total-carrinho').innerText = total.toLocaleString('pt-BR');
+        document.getElementById('total-carrinho').innerText = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         const lista = document.getElementById('itens-carrinho');
         lista.innerHTML = "";
         carrinho.forEach((item, i) => {
-            lista.innerHTML += `<div class="item-carrinho"><span>${item.nome}</span> <button onclick="remover(${i})" style="color:red; border:none; background:none; cursor:pointer;">X</button></div>`;
+            lista.innerHTML += `
+                <div class="item-carrinho">
+                    <div>
+                        <strong>${item.nome}</strong><br>
+                        <small>R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</small>
+                    </div>
+                    <button onclick="remover(${i})" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">Remover</button>
+                </div>`;
         });
     }
 
