@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Premium | InfoCell</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --primary-light: #2e7d32;
+            --accent: #00c853;
+            --bg: #f1f5f9;
+            --text-main: #1a1c1e;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --hover-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 0; line-height: 1.6; }
+
+        .btn-voltar {
+            position: fixed; top: 20px; left: 20px; z-index: 2100;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
+            color: white; width: 45px; height: 45px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; font-size: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .cart-icon-top {
+            position: fixed; top: 20px; right: 20px; z-index: 2100;
+            background: var(--primary); color: white; width: 45px; height: 45px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .badge {
+            position: absolute; top: -5px; right: -5px; background: #ff1744;
+            color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%;
+            font-weight: 800; border: 2px solid var(--white);
+        }
+
+        header { 
+            text-align: center; padding: 100px 20px 60px; 
+            background: linear-gradient(135deg, var(--primary) 0%, #0a2b10 100%);
+            color: var(--white);
+        }
+
+        header h1 { font-size: 2.8rem; margin: 0; font-weight: 800; }
+        header h1 span { color: var(--accent); }
+
+        .container { max-width: 1200px; margin: -40px auto 120px; padding: 0 20px; min-height: 60vh; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+
+        .card { 
+            background: var(--white); border-radius: 24px; overflow: hidden; 
+            box-shadow: var(--card-shadow); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.8);
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: var(--hover-shadow); }
+
+        .img-container { width: 100%; height: 200px; background: #fff; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .card img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-body h3 { margin: 0 0 8px; font-size: 1.1rem; font-weight: 700; color: #1e293b; height: 2.4em; overflow: hidden; }
+
+        .preco-box { background: #f8fafc; padding: 12px; border-radius: 16px; margin-bottom: 15px; border: 1px solid #f1f5f9; }
+        .label-preco { font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; }
+        .valor-unidade { color: #475569; font-size: 1rem; font-weight: 600; margin-bottom: 5px; display: block;}
+        .valor-atacado { color: var(--primary); font-size: 1.4rem; font-weight: 800; display: block;}
+
+        .btn-add { 
+            background: var(--primary); color: white; border: none; padding: 14px; 
+            border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-add:hover { background: var(--primary-light); }
+
+        .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px 25px; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 4000; transform: translateY(100%); transition: 0.5s; }
+        .cart-bar.active { transform: translateY(0); }
+        
+        @media (max-width: 768px) { .cart-bar { padding-right: 85px; } }
+
+        .modal-carrinho { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 5000; display: none; justify-content: flex-end; backdrop-filter: blur(4px); }
+        .modal-content { width: 100%; max-width: 450px; background: white; height: 100%; padding: 30px; overflow-y: auto; }
+        
+        .btn-qtd { background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; color: var(--primary); font-weight: bold; }
+        .alerta-atacado { background: #fff3e0; color: #e65100; padding: 10px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; text-align: center; margin-bottom: 15px; border: 1px solid #ffe0b2; }
+
+        input, select { padding: 14px; border-radius: 12px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem; width: 100%; box-sizing: border-box; }
+
+        footer { background: #1a1c1e; color: #94a3b8; padding: 60px 20px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="btn-voltar">←</a>
+
+<div class="cart-icon-top" onclick="toggleCheckout()">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span class="badge" id="badge-carrinho">0</span>
+</div>
+
+<header>
+    <h1>InfoCell <span>Premium</span></h1>
+    <p>Peças com Garantia e Procedência</p>
+</header>
+
+<div class="container">
+    <div id="loader" style="text-align: center; padding: 100px; color: var(--primary);">Buscando ofertas...</div>
+    <div class="grid-produtos" id="lista-loja"></div>
+</div>
+
+<div class="cart-bar" id="cart-bar">
+    <div>
+        <span id="cart-count" style="font-weight: 800; color: var(--text-muted); font-size: 0.7rem;">0 ITENS</span>
+        <h4 id="cart-total" style="margin:0; color: var(--primary); font-size: 1.4rem;">R$ 0,00</h4>
+    </div>
+    <button onclick="toggleCheckout()" class="btn-add" style="padding: 10px 20px;">Ver Carrinho</button>
+</div>
+
+<div class="modal-carrinho" id="modal-carrinho">
+    <div class="modal-content">
+        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 20px;">
+            <h2 style="margin:0;">Meu Pedido</h2>
+            <button onclick="toggleCheckout()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+        </div>
+        
+        <div id="status-atacado"></div>
+        <div id="resumo-itens" style="margin-bottom: 20px;"></div>
+
+        <div class="form-checkout" style="display:flex; flex-direction:column; gap:12px;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">DADOS DO CLIENTE</label>
+            <input type="text" id="cliente-nome" placeholder="Seu Nome Completo">
+            
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">FORMA DE PAGAMENTO</label>
+            <select id="pagamento">
+                <option value="Pix">Pix</option>
+                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                <option value="Cartão de Débito">Cartão de Débito</option>
+                <option value="Dinheiro">Dinheiro</option>
+            </select>
+    
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">FORMA DE ENTREGA</label>
+            <select id="metodo-entrega" onchange="toggleEndereco()">
+                <option value="Retirar na Loja">Retirar na Loja</option>
+                <option value="Receber em Casa">Receber em Casa (Entrega)</option>
+            </select>
+
+            <div id="campos-endereco" style="display:none; flex-direction:column; gap:10px;">
+                <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">ENDEREÇO DE ENTREGA</label>
+                <input type="text" id="end-rua" placeholder="Rua / Logradouro">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="end-numero" placeholder="Nº" style="flex: 1;">
+                    <input type="text" id="end-bairro" placeholder="Bairro" style="flex: 2;">
+                </div>
+                <input type="text" id="end-cidade" placeholder="Cidade">
+            </div>
+
+            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-top: 10px; border: 1px solid #eee;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px;">
+                    <span>Total do Pedido:</span>
+                    <span id="label-tipo-preco">Calculando...</span>
+                </div>
+                <h3 id="total-final-checkout" style="text-align:right; margin:0; color:var(--primary); font-size: 1.6rem;">R$ 0,00</h3>
+            </div>
+
+            <button onclick="enviarWhatsapp()" class="btn-add" style="background:#25d366; width:100%; margin-top: 10px;">
+                <i class="fa-brands fa-whatsapp"></i> FINALIZAR VIA WHATSAPP
+            </button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:30px; text-align:left;">
+        <div>
+            <h4 style="color:white; margin-bottom: 15px;">InfoCell High Tech</h4>
+            <p>A maior distribuidora de peças da região.</p>
+        </div>
+        <div>
+            <h4 style="color:white; margin-bottom: 15px;">Atendimento</h4>
+            <p>Segunda a Sexta: 08:00 - 18:00<br>Sábado: 08:00 - 12:00</p>
+        </div>
+    </div>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCn6-yI0XY0w4aLA1-i8dCwbgFfdMtbnis",
+        authDomain: "infocell-e92fb.firebaseapp.com",
+        projectId: "infocell-e92fb",
+        storageBucket: "infocell-e92fb.firebasestorage.app",
+        messagingSenderId: "465926649002",
+        appId: "1:465926649002:web:79006fed24a235336e8cd3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    let carrinho = [];
+
+    window.toggleEndereco = () => {
+        const metodo = document.getElementById('metodo-entrega').value;
+        document.getElementById('campos-endereco').style.display = (metodo === 'Receber em Casa') ? 'flex' : 'none';
+    };
+
+    window.addCarrinho = (nome, pAt, pUn) => {
+        carrinho.push({ nome, pAt: Number(pAt), pUn: Number(pUn) });
+        atualizarInterface();
+    };
+
+    window.removerUnidade = (nome) => {
+        const index = carrinho.findIndex(i => i.nome === nome);
+        if (index > -1) carrinho.splice(index, 1);
+        atualizarInterface();
+    };
+
+    function atualizarInterface() {
+        const totalItens = carrinho.length;
+        const isAtacado = totalItens >= 3;
+        const totalFinanceiro = carrinho.reduce((acc, item) => acc + (isAtacado ? item.pAt : item.pUn), 0);
+
+        document.getElementById('cart-bar').classList.toggle('active', totalItens > 0);
+        document.getElementById('badge-carrinho').innerText = totalItens;
+        document.getElementById('cart-count').innerText = `${totalItens} ITENS`;
+        
+        const valorFormatado = totalFinanceiro.toLocaleString('pt-br',{style:'currency', currency:'BRL'});
+        document.getElementById('cart-total').innerText = valorFormatado;
+        document.getElementById('total-final-checkout').innerText = valorFormatado;
+        document.getElementById('label-tipo-preco').innerText = isAtacado ? "PREÇO ATACADO" : "PREÇO UNITÁRIO";
+        
+        atualizarResumo(isAtacado, totalItens);
+    }
+
+    function atualizarResumo(isAtacado, totalItens) {
+        const resumo = document.getElementById('resumo-itens');
+        const statusAtacado = document.getElementById('status-atacado');
+        
+        if (!isAtacado && totalItens > 0) {
+            statusAtacado.innerHTML = `<div class="alerta-atacado">Adicione mais ${3 - totalItens} peças para preço de ATACADO!</div>`;
+        } else if (isAtacado) {
+            statusAtacado.innerHTML = `<div class="alerta-atacado" style="background:#e8f5e9; color:#2e7d32; border-color:#c8e6c9;">✓ VOCÊ GANHOU PREÇO DE ATACADO!</div>`;
+        } else {
+            statusAtacado.innerHTML = "";
+        }
+
+        const agrupado = carrinho.reduce((acc, item) => {
+            if (!acc[item.nome]) acc[item.nome] = { qtd: 0, pAt: item.pAt, pUn: item.pUn };
+            acc[item.nome].qtd++;
+            return acc;
+        }, {});
+
+        resumo.innerHTML = "";
+        for (let nome in agrupado) {
+            const item = agrupado[nome];
+            const precoAplicado = isAtacado ? item.pAt : item.pUn;
+            resumo.innerHTML += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #eee;">
+                    <div style="flex:1">
+                        <div style="font-weight:600; font-size:0.9rem;">${nome}</div>
+                        <div style="color:var(--primary); font-size:0.8rem; font-weight:700;">
+                            ${(precoAplicado * item.qtd).toLocaleString('pt-br',{style:'currency', currency:'BRL'})}
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <button class="btn-qtd" onclick="removerUnidade('${nome}')">-</button>
+                        <span style="font-weight:800; min-width:20px; text-align:center;">${item.qtd}</span>
+                        <button class="btn-qtd" onclick="addCarrinho('${nome}', ${item.pAt}, ${item.pUn})">+</button>
+                    </div>
+                </div>`;
+        }
+    }
+
+    window.toggleCheckout = () => {
+        const m = document.getElementById('modal-carrinho');
+        const isOpen = m.style.display === 'flex';
+        m.style.display = isOpen ? 'none' : 'flex';
+        if (typeof Tawk_API !== 'undefined') {
+            isOpen ? Tawk_API.showWidget() : Tawk_API.hideWidget();
+        }
+    };
+
+    window.enviarWhatsapp = () => {
+        const nome = document.getElementById('cliente-nome').value;
+        const pgto = document.getElementById('pagamento').value;
+        const entrega = document.getElementById('metodo-entrega').value;
+        
+        if(!nome) return alert("Por favor, informe seu nome.");
+
+        let detalhesEndereco = "";
+        if(entrega === 'Receber em Casa') {
+            const rua = document.getElementById('end-rua').value;
+            const num = document.getElementById('end-numero').value;
+            const bairro = document.getElementById('end-bairro').value;
+            const cidade = document.getElementById('end-cidade').value;
+            
+            if(!rua || !num || !bairro || !cidade) return alert("Preencha todos os campos do endereço.");
+            detalhesEndereco = `\n📍 *Endereço:* ${rua}, nº ${num}\n🏘️ *Bairro:* ${bairro}\n🏙️ *Cidade:* ${cidade}`;
+        }
+
+        const isAtacado = carrinho.length >= 3;
+        let msg = `*NOVO PEDIDO - INFOCELL*\n\n`;
+        msg += `👤 *Cliente:* ${nome}\n`;
+        msg += `💳 *Pagamento:* ${pgto}\n`;
+        msg += `🚚 *Entrega:* ${entrega}${detalhesEndereco}\n`;
+        msg += `\n*ITENS DO PEDIDO (${isAtacado ? 'ATACADO' : 'UNITÁRIO'}):*\n`;
+
+        const r = carrinho.reduce((acc, i) => { acc[i.nome] = (acc[i.nome] || 0) + 1; return acc; }, {});
+        for (let p in r) msg += `▪️ ${r[p]}x ${p}\n`;
+
+        msg += `\n*TOTAL FINAL: ${document.getElementById('total-final-checkout').innerText}*`;
+
+        window.open(`https://wa.me/5599999999999?text=${encodeURIComponent(msg)}`, '_blank');
+    };
+
+    async function load() {
+        try {
+            const q = query(collection(db, "produtos"), orderBy("timestamp", "desc"));
+            const snap = await getDocs(q);
+            document.getElementById('loader').style.display = 'none';
+            const container = document.getElementById('lista-loja');
+            
+            snap.forEach(d => {
+                const p = d.data();
+                container.innerHTML += `
+                    <div class="card">
+                        <div class="img-container"><img src="${p.img || 'https://via.placeholder.com/200'}" alt="${p.nome}"></div>
+                        <div class="card-body">
+                            <h3>${p.nome}</h3>
+                            <div class="preco-box">
+                                <span class="label-preco">Unidade (até 2 pçs)</span>
+                                <span class="valor-unidade">${Number(p.pUn || 0).toLocaleString('pt-br',{style:'currency', currency:'BRL'})}</span>
+                                <span class="label-preco">Atacado (3+ peças)</span>
+                                <span class="valor-atacado">${Number(p.pAt || 0).toLocaleString('pt-br',{style:'currency', currency:'BRL'})}</span>
+                            </div>
+                            <button class="btn-add" onclick="addCarrinho('${p.nome}', ${p.pAt}, ${p.pUn})">
+                                <i class="fa-solid fa-cart-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>`;
+            });
+        } catch(e) { console.error(e); }
+    }
+    load();
+</script>
+
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true; s1.src='https://embed.tawk.to/6980cbdcc102121c36f5ae53/1jgfholst';
+s1.charset='UTF-8'; s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+
+</body>
+</html>
