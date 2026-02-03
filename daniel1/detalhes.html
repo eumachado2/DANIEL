@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto | InfoCell</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; color: #1a1c1e; }
+        .container-detalhes { max-width: 900px; margin: 50px auto; background: white; border-radius: 24px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .img-area { background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 16px; border: 1px solid #f1f5f9; }
+        .img-caption { max-width: 100%; height: auto; object-fit: contain; }
+        .info-area h1 { font-size: 2.2rem; margin: 0 0 15px; color: #1b5e20; }
+        .preco-tag { font-size: 2rem; font-weight: 800; color: #1b5e20; display: block; margin-bottom: 20px; }
+        .specs { margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 12px; }
+        .specs h3 { margin-top: 0; font-size: 1rem; text-transform: uppercase; color: #64748b; }
+        .btn-compra { background: #00c853; color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+        .btn-compra:hover { background: #1b5e20; transform: translateY(-3px); }
+        @media (max-width: 768px) { .container-detalhes { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container-detalhes">
+    <div class="img-area">
+        <img id="prod-img" src="" class="img-caption">
+    </div>
+    <div class="info-area">
+        <h1 id="prod-nome">Nome do Produto</h1>
+        <span class="preco-tag" id="prod-preco">R$ 0,00</span>
+        
+        <div class="specs">
+            <h3>Especificações e Descrição</h3>
+            <p id="prod-desc">Carregando informações...</p>
+        </div>
+
+        <button onclick="adicionarEIrParaLoja()" class="btn-compra">
+            <i class="fa-solid fa-cart-plus"></i> ADICIONAR AO CARRINHO
+        </button>
+        <p style="text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 15px;">
+            *Você será redirecionado para finalizar o pedido.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Script para capturar os dados da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const nome = urlParams.get('produto');
+    const precoRaw = urlParams.get('preco');
+    const img = urlParams.get('img');
+    const desc = urlParams.get('desc');
+
+    // Preenche a página
+    document.getElementById('prod-nome').innerText = nome;
+    document.getElementById('prod-preco').innerText = "R$ " + precoRaw;
+    document.getElementById('prod-img').src = img;
+    document.getElementById('prod-desc').innerText = desc;
+    document.title = nome + " | InfoCell";
+
+    function adicionarEIrParaLoja() {
+        // Converte o preço de string para número para poder somar no carrinho
+        const precoNumerico = parseFloat(precoRaw.replace(/\./g, '').replace(',', '.'));
+
+        const produto = {
+            nome: nome,
+            pAt: precoNumerico,
+            pUn: precoNumerico
+        };
+
+        // Salva o produto para ser lido pela página de produtos.html
+        localStorage.setItem('add_pendente', JSON.stringify(produto));
+
+        alert("Produto adicionado! Redirecionando para o catálogo...");
+        window.location.href = "produtos.html";
+    }
+</script>
+
+</body>
+</html>

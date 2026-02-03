@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoCell High Tech | Bem-vindo</title>
+    <style>
+        :root {
+            --primary: #1b5e20; 
+            --accent: #2ecc71;  
+            --white: #ffffff;
+            --bg: #f8f9fa;
+            --text: #1a1a1a;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            scroll-behavior: smooth;
+        }
+
+        /* Seção de Entrada */
+        .hero {
+            position: relative;
+            width: 100%; height: 100vh;
+            background: linear-gradient(rgba(27, 94, 32, 0.8), rgba(10, 43, 14, 0.9)), 
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .logo-home {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 { font-size: 2rem; margin-top: 0; font-weight: 300; opacity: 0.9; }
+
+        .btn-principal {
+            background-color: var(--accent);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
+
+        .btn-principal:hover {
+            transform: translateY(-5px);
+            background-color: #27ae60;
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+        }
+
+        /* SEÇÃO DE PRODUTOS EM DESTAQUE */
+        .featured-section {
+            padding: 80px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            font-weight: 800;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .featured-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .featured-card h3 {
+            font-size: 1.4rem;
+            margin: 10px 0;
+            color: var(--text);
+        }
+
+        .featured-card .tag {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .featured-card .price {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .btn-saiba-mais {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-saiba-mais:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="logo-home">INFOCELL <span style="color: var(--accent)">HIGH TECH</span></div>
+    <h1>Inovação e Performance Digital</h1>
+    <p>A tecnologia que você procura, com a exclusividade que você merece.</p>
+    
+    <a href="produtos.html" class="btn-principal">VER PRODUTOS</a>
+</section>
+
+<section class="featured-section" id="destaques">
+    <h2 class="featured-title">Destaques da Semana</h2>
+    
+    <div class="featured-grid">
+        <div class="featured-card">
+            <span class="tag">Mais Vendido</span>
+            <img src="macro.png" alt="Produto">
+            <h3>iPhone 15 Pro Max</h3>
+            <span class="price">R$ 8.499</span>
+            <a href="detalhes.html?produto=iPhone 15 Pro Max&preco=8.499,00&img=macro.png&desc=O iPhone mais poderoso já criado. Processador A17 Pro, acabamento em Titânio Aeroespacial e sistema de câmera Pro de 48MP." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+        </div>
+
+        <div class="featured-card">
+            <span class="tag">Lançamento</span>
+            <img src="one.png" alt="Produto">
+            <h3>MacBook Pro M3</h3>
+            <span class="price">R$ 12.900</span>
+            <a href="detalhes.html?produto=MacBook Pro M3&preco=12.900,00&img=one.png&desc=Performance extrema para profissionais. Chip M3 de arquitetura de 3 nanômetros, tela Liquid Retina XDR e bateria de longa duração." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+        </div>
+
+        <div class="featured-card">
+            <span class="tag">Oferta</span>
+            <img src="X15.jpg" alt="Produto">
+            <h3>AirPods Max Space Gray</h3>
+            <span class="price">R$ 4.200</span>
+            <a href="detalhes.html?produto=AirPods Max Space Gray&preco=4.200,00&img=X15.jpg&desc=Som de alta fidelidade e cancelamento de ruído líder da categoria. Design em malha respirável e áudio espacial personalizado." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 InfoCell High Tech - Todos os direitos reservados.</p>
+    <p><small>Qualidade premium em cada detalhe técnico.</small></p>
+</footer>
+
+</body>
+</html>
