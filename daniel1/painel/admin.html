@@ -45,7 +45,6 @@
         
         .btn-cancelar { background: #95a5a6; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 5px; display: none; }
 
-        /* Estilos da Lista de Produtos e Pedidos */
         .item-admin, .order-card { background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #eee; }
         .item-admin { display: flex; align-items: center; justify-content: space-between; }
         .item-admin img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 15px; border: 1px solid #ddd; }
@@ -61,6 +60,10 @@
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; background: #ddd; }
         .tab-btn.active { background: var(--primary); color: white; }
+
+        /* Responsividade para os 3 preços */
+        .price-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        @media (max-width: 600px) { .price-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -104,10 +107,22 @@
                 <label class="main-label">Descrição</label>
                 <textarea id="desc" rows="2" required placeholder="Detalhes técnicos..."></textarea>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group"><label class="main-label">R$ Varejo</label><input type="number" step="0.01" id="pUn" required></div>
-                <div class="form-group"><label class="main-label">R$ Atacado</label><input type="number" step="0.01" id="pAt" required></div>
+            
+            <div class="price-grid">
+                <div class="form-group">
+                    <label class="main-label">R$ Varejo</label>
+                    <input type="number" step="0.01" id="pUn" required placeholder="Unitário">
+                </div>
+                <div class="form-group">
+                    <label class="main-label">R$ Atacado (3+)</label>
+                    <input type="number" step="0.01" id="pAt3" required placeholder="Mín. 3">
+                </div>
+                <div class="form-group">
+                    <label class="main-label">R$ Atacado (10+)</label>
+                    <input type="number" step="0.01" id="pAt10" required placeholder="Mín. 10">
+                </div>
             </div>
+
             <button type="submit" id="btn-submit" class="btn-cadastrar">CADASTRAR PRODUTO</button>
             <button type="button" id="btn-cancel" class="btn-cancelar" onclick="resetForm()">CANCELAR EDIÇÃO</button>
         </form>
@@ -141,7 +156,6 @@
     const SENHA_MESTRA = "1234";
     let imagemBase64 = "";
 
-    // Login
     window.checkPass = function() {
         const input = document.getElementById('pass-input').value;
         if(input === SENHA_MESTRA) {
@@ -152,7 +166,6 @@
         } else { alert("Senha incorreta!"); }
     };
 
-    // Alternar abas
     window.showTab = function(tab) {
         if(tab === 'produtos') {
             document.getElementById('section-produtos').style.display = 'block';
@@ -167,7 +180,6 @@
         }
     };
 
-    // Preview Imagem
     window.previewImage = function(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
@@ -181,7 +193,6 @@
         }
     };
 
-    // Salvar/Editar Produto
     const form = document.getElementById('prod-form');
     form.onsubmit = async (e) => {
         e.preventDefault();
@@ -193,7 +204,8 @@
             nome: document.getElementById('nome').value,
             desc: document.getElementById('desc').value,
             pUn: Number(document.getElementById('pUn').value),
-            pAt: Number(document.getElementById('pAt').value),
+            pAt3: Number(document.getElementById('pAt3').value),
+            pAt10: Number(document.getElementById('pAt10').value),
             timestamp: serverTimestamp()
         };
 
@@ -225,7 +237,6 @@
         imagemBase64 = "";
     }
 
-    // Carregar Produtos
     async function carregarProdutos() {
         const lista = document.getElementById('lista-admin');
         const q = query(collection(db, "produtos"), orderBy("timestamp", "desc"));
@@ -237,34 +248,32 @@
             lista.innerHTML += `
                 <div class="item-admin">
                     <img src="${p.img || 'https://via.placeholder.com/50'}">
-                    <div style="flex:1"><strong>${p.nome}</strong><br>Atacado: R$ ${Number(p.pAt).toFixed(2)}</div>
+                    <div style="flex:1">
+                        <strong>${p.nome}</strong><br>
+                        <small>Var: R$${p.pUn.toFixed(2)} | Atac (3): R$${p.pAt3.toFixed(2)} | Atac (10): R$${p.pAt10.toFixed(2)}</small>
+                    </div>
                     <div class="actions">
-                        <button class="btn-edit" onclick="prepararEdicao('${id}', '${p.nome}', '${p.desc}', ${p.pUn}, ${p.pAt}, '${p.img}')">Editar</button>
+                        <button class="btn-edit" onclick="prepararEdicao('${id}', '${p.nome}', '${p.desc}', ${p.pUn}, ${p.pAt3}, ${p.pAt10}, '${p.img}')">Editar</button>
                         <button class="btn-del" onclick="remover('${id}')">Excluir</button>
                     </div>
                 </div>`;
         });
     }
 
-    // --- CARREGAR PEDIDOS (NOTAS) ---
     async function carregarPedidos() {
         const listaPedidos = document.getElementById('lista-pedidos');
         try {
-            // Assume que os pedidos estão salvos na coleção "pedidos"
             const q = query(collection(db, "pedidos"), orderBy("data", "desc"));
             const snapshot = await getDocs(q);
-            
             if(snapshot.empty) {
                 listaPedidos.innerHTML = "<p>Nenhum pedido recebido até agora.</p>";
                 return;
             }
-
             listaPedidos.innerHTML = "";
             snapshot.forEach((res) => {
                 const pedido = res.data();
                 const id = res.id;
                 const dataFormatada = pedido.data ? new Date(pedido.data.seconds * 1000).toLocaleString() : "Data n/a";
-                
                 listaPedidos.innerHTML += `
                     <div class="order-card">
                         <div class="order-header">
@@ -273,12 +282,9 @@
                         </div>
                         <div style="font-size:0.8rem; margin-bottom:5px; color:#666;">📅 ${dataFormatada}</div>
                         <div class="order-details">${pedido.detalhes || "Sem descrição"}</div>
-                    </div>
-                `;
+                    </div>`;
             });
-        } catch (err) {
-            listaPedidos.innerHTML = "<p>Erro ao carregar pedidos ou coleção 'pedidos' inexistente.</p>";
-        }
+        } catch (err) { listaPedidos.innerHTML = "<p>Erro ao carregar pedidos.</p>"; }
     }
 
     window.removerPedido = async (id) => {
@@ -288,18 +294,20 @@
         }
     };
 
-    window.prepararEdicao = (id, nome, desc, pun, pat, img) => {
+    window.prepararEdicao = (id, nome, desc, pun, pat3, pat10, img) => {
         window.scrollTo({top: 0, behavior: 'smooth'});
         document.getElementById('edit-id').value = id;
         document.getElementById('nome').value = nome;
         document.getElementById('desc').value = desc;
         document.getElementById('pUn').value = pun;
-        document.getElementById('pAt').value = pat;
+        document.getElementById('pAt3').value = pat3;
+        document.getElementById('pAt10').value = pat10;
         document.getElementById('preview').src = img;
         document.getElementById('preview-container').style.display = "block";
         document.getElementById('form-title').innerText = "✏️ Editando: " + nome;
         document.getElementById('btn-submit').innerText = "ATUALIZAR PRODUTO";
         document.getElementById('btn-cancel').style.display = "block";
+        imagemBase64 = img; 
     };
 
     window.remover = async (id) => {

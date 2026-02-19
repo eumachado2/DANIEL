@@ -11,6 +11,7 @@
             --white: #ffffff;
             --bg: #f8f9fa;
             --text: #1a1a1a;
+            --text-muted: #666;
         }
 
         body, html {
@@ -20,7 +21,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Seção de Entrada */
+        /* Seção Hero */
         .hero {
             position: relative;
             width: 100%; height: 100vh;
@@ -28,134 +29,73 @@
                         url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center;
         }
 
-        .logo-home {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
-        }
-
+        .logo-home { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -2px; }
         .hero h1 { font-size: 2rem; margin-top: 0; font-weight: 300; opacity: 0.9; }
 
         .btn-principal {
-            background-color: var(--accent);
-            color: white;
-            padding: 20px 50px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
-            margin-top: 30px;
-            text-transform: uppercase;
-        }
-
-        .btn-principal:hover {
-            transform: translateY(-5px);
-            background-color: #27ae60;
-            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+            background-color: var(--accent); color: white; padding: 20px 50px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; font-size: 1.2rem; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4); margin-top: 30px; text-transform: uppercase;
         }
 
         /* SEÇÃO DE PRODUTOS EM DESTAQUE */
-        .featured-section {
-            padding: 80px 8%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .featured-title {
-            text-align: center;
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-bottom: 50px;
-            font-weight: 800;
-        }
-
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+        .featured-section { padding: 80px 8%; max-width: 1200px; margin: 0 auto; }
+        .featured-title { text-align: center; font-size: 2.2rem; color: var(--primary); margin-bottom: 50px; font-weight: 800; }
+        .featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
         .featured-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border: 1px solid #eee;
+            background: var(--white); border-radius: 24px; padding: 25px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee;
+            display: flex; flex-direction: column;
         }
 
-        .featured-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-        }
+        .featured-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .featured-card h3 { font-size: 1.1rem; margin: 10px 0; color: var(--text); min-height: 2.4em; }
 
-        .featured-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-
-        .featured-card h3 {
-            font-size: 1.4rem;
-            margin: 10px 0;
-            color: var(--text);
-        }
-
-        .featured-card .tag {
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .featured-card .price {
-            display: block;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 15px 0;
-        }
+        .preco-vitrine { background: #f1f5f9; border-radius: 15px; padding: 15px; margin: 15px 0; text-align: left; }
+        .linha-preco { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 0.85rem; }
+        .linha-preco.principal { border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; margin-bottom: 8px; font-weight: bold; }
+        .linha-preco .destaque-preco { color: #e67e22 !important; font-weight: 800; font-size: 1.1rem; }
 
         .btn-saiba-mais {
-            display: inline-block;
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 10px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
+            display: block; background: var(--primary); color: white; padding: 12px; 
+            border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s;
         }
 
-        .btn-saiba-mais:hover {
-            background: var(--primary);
-            color: white;
+        /* NOVA SEÇÃO: DEPOIMENTOS */
+        .testimonials-section { background-color: #f1f1f1; padding: 80px 8%; }
+        .testimonials-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
         }
+        .testimonial-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .stars { color: #f1c40f; margin-bottom: 10px; font-size: 1.2rem; }
+        .testimonial-text { font-style: italic; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; }
+        .client-info { display: flex; align-items: center; gap: 15px; }
+        .client-avatar { 
+            width: 50px; height: 50px; 
+            background: var(--primary); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 1.2rem;
+        }
+        .client-name { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+        .client-role { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
 
-        footer {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 40px;
-            margin-top: 50px;
-        }
+        footer { background: var(--primary); color: white; text-align: center; padding: 40px; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -164,37 +104,85 @@
     <div class="logo-home">INFOCELL <span style="color: var(--accent)">HIGH TECH</span></div>
     <h1>Inovação e Performance Digital</h1>
     <p>A tecnologia que você procura, com a exclusividade que você merece.</p>
-    
     <a href="produtos.html" class="btn-principal">VER PRODUTOS</a>
 </section>
 
 <section class="featured-section" id="destaques">
     <h2 class="featured-title">Destaques da Semana</h2>
-    
     <div class="featured-grid">
         <div class="featured-card">
-            <span class="tag">Mais Vendido</span>
-            <img src="macro.png" alt="Produto">
-            <h3>iPhone 15 Pro Max</h3>
-            <span class="price">R$ 8.499</span>
-            <a href="detalhes.html?produto=iPhone 15 Pro Max&preco=8.499,00&img=macro.png&desc=O iPhone mais poderoso já criado. Processador A17 Pro, acabamento em Titânio Aeroespacial e sistema de câmera Pro de 48MP." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+            <img src="iphone.png" alt="Produto">
+            <h3>Dock De Carga Iphone 12 Original</h3>
+            <div class="preco-vitrine">
+                <div class="linha-preco principal"><span>Varejo</span> <span>R$ 35,00</span></div>
+                <div class="linha-preco"><span>Atacado 3+</span> <span class="destaque-preco">R$ 31,00</span></div>
+                <div class="linha-preco"><span>Atacado 10+</span> <span class="destaque-preco">R$ 25,00</span></div>
+            </div>
+            <a href="produtos.html" class="btn-saiba-mais">Ver no Catálogo</a>
         </div>
-
         <div class="featured-card">
-            <span class="tag">Lançamento</span>
+            <img src="redmin15.png" alt="Produto">
+            <h3>Placa De Carga Redmi 15</h3>
+            <div class="preco-vitrine">
+                <div class="linha-preco principal"><span>Varejo</span> <span>R$ 18,00</span></div>
+                <div class="linha-preco"><span>Atacado 3+</span> <span class="destaque-preco">R$ 15,00</span></div>
+                <div class="linha-preco"><span>Atacado 10+</span> <span class="destaque-preco">R$ 10,00</span></div>
+            </div>
+            <a href="produtos.html" class="btn-saiba-mais">Ver no Catálogo</a>
+        </div>
+        <div class="featured-card">
             <img src="one.png" alt="Produto">
-            <h3>MacBook Pro M3</h3>
-            <span class="price">R$ 12.900</span>
-            <a href="detalhes.html?produto=MacBook Pro M3&preco=12.900,00&img=one.png&desc=Performance extrema para profissionais. Chip M3 de arquitetura de 3 nanômetros, tela Liquid Retina XDR e bateria de longa duração." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+            <h3>Dock Carga Moto One Fusion</h3>
+            <div class="preco-vitrine">
+                <div class="linha-preco principal"><span>Varejo</span> <span>R$ 18,00</span></div>
+                <div class="linha-preco"><span>Atacado 3+</span> <span class="destaque-preco">R$ 15,00</span></div>
+                <div class="linha-preco"><span>Atacado 10+</span> <span class="destaque-preco">R$ 10,00</span></div>
+            </div>
+            <a href="produtos.html" class="btn-saiba-mais">Ver no Catálogo</a>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials-section">
+    <h2 class="featured-title">O que nossos clientes dizem</h2>
+    <div class="testimonials-grid">
+        
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"As peças são de extrema qualidade. Sou técnico há 10 anos e o dock de carga do iPhone 12 encaixou perfeitamente, sem perda de sinal."</p>
+            <div class="client-info">
+                <div class="client-avatar">RC</div>
+                <div>
+                    <div class="client-name">Ricardo Costa</div>
+                    <div class="client-role">Técnico em Celulares</div>
+                </div>
+            </div>
         </div>
 
-        <div class="featured-card">
-            <span class="tag">Oferta</span>
-            <img src="X15.jpg" alt="Produto">
-            <h3>AirPods Max Space Gray</h3>
-            <span class="price">R$ 4.200</span>
-            <a href="detalhes.html?produto=AirPods Max Space Gray&preco=4.200,00&img=X15.jpg&desc=Som de alta fidelidade e cancelamento de ruído líder da categoria. Design em malha respirável e áudio espacial personalizado." class="btn-saiba-mais" target="_blank">Ver Detalhes</a>
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"O melhor preço de atacado da região. Compro pro meu estoque e a margem de lucro que consigo é excelente. Recomendo muito!"</p>
+            <div class="client-info">
+                <div class="client-avatar">AM</div>
+                <div>
+                    <div class="client-name">Ana Maria</div>
+                    <div class="client-role">Lojista</div>
+                </div>
+            </div>
         </div>
+
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"Entrega rápida e suporte técnico nota 10. Sempre que tenho dúvida sobre compatibilidade de placas, eles me ajudam prontamente."</p>
+            <div class="client-info">
+                <div class="client-avatar">JP</div>
+                <div>
+                    <div class="client-name">João Pedro</div>
+                    <div class="client-role">Cliente VIP</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
